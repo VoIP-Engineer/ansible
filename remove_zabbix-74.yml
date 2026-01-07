@@ -1,0 +1,59 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Download Zabbix repository
+    ansible.builtin.get_url:
+      url: https://repo.zabbix.com/zabbix/7.4/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.4+ubuntu24.04_all.deb
+      dest: .
+
+  - name: Update repoository
+    ansible.builtin.apt:
+      update_cache: yes
+
+  - name: Remove zabbix-server-pgsql
+    ansible.builtin.apt:
+      name: zabbix-server-pgsql
+      state: absent
+
+  - name: Remove zabbix-frontend-php
+    ansible.builtin.apt:
+      name: zabbix-frontend-php
+      state: absent
+
+  - name: Remove php8.3-pgsql
+    ansible.builtin.apt:
+      name: php8.3-pgsql
+      state: absent
+
+  - name: Remove zabbix-nginx-conf
+    ansible.builtin.apt:
+      name: zabbix-nginx-conf
+      state: absent
+
+  - name: Remove zabbix-sql-scripts
+    ansible.builtin.apt:
+      name: zabbix-sql-scripts
+      state: absent
+
+  - name: Remove zabbix-agent2
+    ansible.builtin.apt:
+      name: zabbix-agent2
+      state: absent
+
+  - name: Remove zabbix-agent2-plugin-mongodb
+    ansible.builtin.apt:
+      name: zabbix-agent2-plugin-mongodb
+      state: absent
+
+  - name: Remove zabbix-agent2-plugin-mssql
+    ansible.builtin.apt:
+      name: zabbix-agent2-plugin-mssql
+      state: absent
+
+  - name: Remove zabbix-agent2-plugin-postgresql
+    ansible.builtin.apt:
+      name: zabbix-agent2-plugin-postgresql
+      state: absent
+

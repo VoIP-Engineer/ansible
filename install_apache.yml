@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update repository index
+    ansible.builtin.apt:
+      update_cache: yes
+
+  - name: upgrade system
+    ansible.builtin.apt:
+      upgrade: dist
+
+  - name: install apache2 package
+    ansible.builtin.apt:
+      name: apache2
