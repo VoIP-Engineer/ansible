@@ -1,0 +1,26 @@
+---
+- name: List users on Linux systems
+  hosts: all
+  gather_facts: no
+  become: yes
+  
+  tasks:
+    - name: Get all users from /etc/passwd
+      ansible.builtin.shell: |
+        cut -d: -f1 /etc/passwd
+      register: user_list
+      changed_when: false
+
+    - name: Display all users
+      ansible.builtin.debug:
+        msg: "{{ user_list.stdout_lines }}"
+
+    - name: Get users with UID >= 1000 (regular users)
+      ansible.builtin.shell: |
+        awk -F: '$3 >= 1000 && $3 != 65534 {print $1}' /etc/passwd
+      register: regular_users
+      changed_when: false
+
+    - name: Display regular users only
+      ansible.builtin.debug:
+        msg: "{{ regular_users.stdout_lines }}"
